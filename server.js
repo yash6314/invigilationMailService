@@ -198,7 +198,7 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
         await transporter.sendMail({
           from: `"Examination Cell" <${process.env.MAIL_USER}>`,
           to: p.mail,
-          subject: 'Invigilation Duties - End Sem Minor 1 2025-26',
+          subject: 'Invigilation Duties - Spring Semester Minor-1 2025-26',
           html,
           text: 'Please view this email in HTML format.'
         });
@@ -376,7 +376,7 @@ app.post('/send-mails/by-id', async (req, res) => {
     await transporter.sendMail({
       from: `"Examination Cell" <${process.env.MAIL_USER}>`,
       to: user.mail_id,
-      subject: 'Invigilation Duties - Minor-1 2025-26',
+      subject: 'Invigilation Duties - Spring Semester Minor-1 2025-26',
       html,
       text: 'Please view this email in HTML format.'
     });
