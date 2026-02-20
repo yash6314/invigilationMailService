@@ -19,7 +19,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-// ✅ FIXED: createTransport (not createTransporter)
+// ✅ CORRECT
 const transporter = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
   port: process.env.MAIL_PORT,
@@ -130,9 +130,9 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
           };
         }
 
+        // ✅ IST TIME CONVERSION
         personMap[qid].duties.push({
-          date: inv.date,
-          time: `${new Date(inv.start_time).toLocaleTimeString()} – ${new Date(inv.end_time).toLocaleTimeString()}`,
+          date: inv.date,          time: `${new Date(inv.start_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })} – ${new Date(inv.end_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })}`,
           venue: venue?.venue_name,
           hall: hall?.hall_name,
           floor: hall?.floor
@@ -175,15 +175,14 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
           </table>
           <p><strong>Instructions:</strong></p>
           <p><strong>1. All invigilators are expected to report to the allotted exam room at least 20 minutes before start of the exam for smooth operation of the QP collection/distribution.</strong></p>
-          <p><strong>2. Request all faculty/Non-faculty colleagues to please observe the “NO CELL PHONE/LAPTOP” usage during the duty period.</strong></p>
+          <p><strong>2. Request all faculty/Non-faculty colleagues to please observe the "NO CELL PHONE/LAPTOP" usage during the duty period.</strong></p>
           <p><strong>3. The question papers will be distributed exactly at 10:00 AM. Please ensure that all students are expected to be seated in their designated places by 9:50 AM – however, we estimate that few students will enter post this time – and hence NO students will be allowed to enter the exam room after 10:00 AM under any circumstances.</strong></p>
           <p><strong>4. The students are required to report to the examination centers at Mahindra University with their MU identity card (ID) at 9.30 AM onward. In the event of a lost ID card or if a student is not carrying their ID card, they will be liable for a penalty of Rs. 5000/-, which can only be paid through the QR code (using PhonePe, G Pay, Paytm, etc.) available at the check-in desk for obtaining a new or temporary ID card.</strong></p>
-          <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying any banned item during the examination, their exam paper will be immediately confiscated and awarded ‘ZERO MARK’. There will be random physical frisking in each exam room.</strong></p>
+          <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying any banned item during the examination, their exam paper will be immediately confiscated and awarded 'ZERO MARK'. There will be random physical frisking in each exam room.</strong></p>
           <p><strong>6. Students will be permitted to leave the exam room only after completing the first one hour.</strong></p>
           <p><strong>7. No wash room break for Minors and supplementary exams!</strong></p>
           
-          
-          <p><em>This is a noreply email. For any queries please contact: <a href="murtaza.bohra@mahindrauniversity.edu.in">murtaza.bohra@mahindrauniversity.edu.in</a></em></p>
+          <p><em>This is a noreply email. For any queries please contact: <a href="mailto:murtaza.bohra@mahindrauniversity.edu.in">murtaza.bohra@mahindrauniversity.edu.in</a></em></p>
           <p>Thank you for your cooperation.</p>
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
             <p><strong>Warm Regards,</strong></p>
@@ -317,9 +316,10 @@ app.post('/send-mails/by-id', async (req, res) => {
         .eq('venue_id', inv.venue_id)
         .single();
 
+      // ✅ IST TIME CONVERSION
       duties.push({
         date: inv.date,
-        time: `${new Date(inv.start_time).toLocaleTimeString()} – ${new Date(inv.end_time).toLocaleTimeString()}`,
+        time: `${new Date(inv.start_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })} – ${new Date(inv.end_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })}`,
         venue: venue?.venue_name,
         hall: hall?.hall_name,
         floor: hall?.floor
@@ -343,22 +343,22 @@ app.post('/send-mails/by-id', async (req, res) => {
 
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%; margin: 20px 0;">
           <thead style="background:#4CAF50; color: white;">
-          <tr>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Venue</th>
-            <th>Hall</th>
-            <th>Floor</th>
-          </tr>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Venue</th>
+              <th>Hall</th>
+              <th>Floor</th>
+            </tr>
           </thead>
           <tbody>${rows}</tbody>
         </table>
         <p><strong>Instructions:</strong></p>
         <p><strong>1. All invigilators are expected to report to the allotted exam room at least 20 minutes before start of the exam for smooth operation of the QP collection/distribution.</strong></p>
-        <p><strong>2. Request all faculty/Non-faculty colleagues to please observe the “NO CELL PHONE/LAPTOP” usage during the duty period.</strong></p>
+        <p><strong>2. Request all faculty/Non-faculty colleagues to please observe the "NO CELL PHONE/LAPTOP" usage during the duty period.</strong></p>
         <p><strong>3. The question papers will be distributed exactly at 10:00 AM. Please ensure that all students are expected to be seated in their designated places by 9:50 AM – however, we estimate that few students will enter post this time – and hence NO students will be allowed to enter the exam room after 10:00 AM under any circumstances.</strong></p>
         <p><strong>4. The students are required to report to the examination centers at Mahindra University with their MU identity card (ID) at 9.30 AM onward. In the event of a lost ID card or if a student is not carrying their ID card, they will be liable for a penalty of Rs. 5000/-, which can only be paid through the QR code (using PhonePe, G Pay, Paytm, etc.) available at the check-in desk for obtaining a new or temporary ID card.</strong></p>
-        <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying any banned item during the examination, their exam paper will be immediately confiscated and awarded ‘ZERO MARK’. There will be random physical frisking in each exam room.</strong></p>
+        <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying any banned item during the examination, their exam paper will be immediately confiscated and awarded 'ZERO MARK'. There will be random physical frisking in each exam room.</strong></p>
         <p><strong>6. Students will be permitted to leave the exam room only after completing the first one hour.</strong></p>
         <p><strong>7. No wash room break for Minors and supplementary exams!</strong></p>
 
@@ -406,7 +406,6 @@ app.post('/send-mails', async (req, res) => {
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
   
-  // Check credentials from environment variables
   const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
   
