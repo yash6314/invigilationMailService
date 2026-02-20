@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Invigilation Mail Sender</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    input, button {
+      padding: 8px;
+      margin-top: 8px;
+      width: 260px;
+    }
+    button {
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover:not(:disabled) {
+      background: #45a049;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    hr {
+      margin: 30px 0;
+    }
+    #status {
+      margin-top: 15px;
+      font-weight: bold;
+      padding: 10px;
+      border-radius: 4px;
+    }
+    #status.success {
+      background: #d4edda;
+      color: #155724;
+    }
+    #status.error {
+      background: #f8d7da;
+      color: #721c24;
+    }
+    .login-section {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+    }
+    .main-section {
+      display: none;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #4CAF50;
+    }
+    .logout-btn {
+      background: #dc3545 !important;
+      width: auto !important;
+      padding: 8px 16px !important;
+      font-size: 14px !important;
+      margin: 0 !important;
+    }
+    .logout-btn:hover {
+      background: #c82333 !important;
+    }
+    .session-info {
+      color: #28a745;
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+    h2 {
+      color: #333;
+      margin: 0;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    #errorMsg {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Section -->
+  <div id="loginSection" class="login-section">
+    <h2>🔐 Login Required</h2>
+    <label>Username</label>
+    <input type="text" id="username" placeholder="admin">
+    
+    <label>Password</label>
+    <input type="password" id="password" placeholder="••••••••">
+    
+    <button onclick="login()">Login</button>
+    <div id="errorMsg"></div>
+  </div>
+
+  <!-- Main Section (Hidden until login) -->
+  <div id="mainSection" class="main-section">
+    <div class="header">
+      <div>
+        <h2>Bulk Invigilation Mails</h2>
+        <div class="session-info">✅ Logged in permanently</div>
+      </div>
+      <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+    </div>
+    
+    <label>From Date</label>
+    <input type="date" id="fromDate">
+    
+    <label>To Date</label>
+    <input type="date" id="toDate">
+    
+    <button onclick="sendBulk()">Send Bulk Mails</button>
+    
+    <div id="status"></div>
+    
+    <hr>
+    
+    <h2>Single Person Mail</h2>
+    
+    <label>EID / HTNO</label>
+    <input type="text" id="personId" placeholder="Enter EID or HTNO">
+    
+    <button onclick="sendIndividual()">Send Individual Mail</button>
+  </div>
+
+  <script>
+    let isAuthenticated = false;
+    const TOKEN_KEY = 'auth_token_permanent';
+
+    // Check if already logged in PERMANENTLY
+    function checkAuth() {
+      const token = localStorage.getItem(TOKEN_KEY);
+      if (token) {
+        isAuthenticated = true;
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('mainSection').style.display = 'block';
+        return true;
+      }
+      return false;
+    }
+
+    async function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorMsg = document.getElementById('errorMsg');
+      
+      if (!username || !password) {
+        showError('Enter username and password');
+        return;
+      }
+
+      try {
+        const res = await fetch('/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        
+        const data = await res.json();
+        
+        if (data.success) {
+          localStorage.setItem(TOKEN_KEY, data.token);
+          isAuthenticated = true;
+          
+          document.getElementById('loginSection').style.display = 'none';
+          document.getElementById('mainSection').style.display = 'block';
+          document.getElementById('errorMsg').style.display = 'none';
+        } else {
+          showError(data.message);
+        }
+      } catch (err) {
+        showError('Login failed. Try again.');
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem(TOKEN_KEY);
+      isAuthenticated = false;
+      document.getElementById('loginSection').style.display = 'block';
+      document.getElementById('mainSection').style.display = 'none';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('errorMsg').style.display = 'none';
+    }
+
+    function showError(msg) {
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.textContent = msg;
+      errorMsg.style.display = 'block';
+    }
+
+    async function sendBulk() {
+      const fromDate = document.getElementById('fromDate').value;
+      const toDate = document.getElementById('toDate').value;
+      const status = document.getElementById('status');
+
+      if (!fromDate || !toDate) {
+        showStatus('Select from & to dates', 'error');
+        return;
+      }
+
+      status.textContent = 'Sending bulk mails...';
+      status.className = '';
+      
+      try {
+        const res = await fetch('/send-mails', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fromDate, toDate })
+        });
+
+        const data = await res.json();
+        showStatus(data.message, 'success');
+      } catch (err) {
+        showStatus('Error sending bulk mails', 'error');
+      }
+    }
+
+    async function sendIndividual() {
+      const idValue = document.getElementById('personId').value;
+      const fromDate = document.getElementById('fromDate').value;
+      const toDate = document.getElementById('toDate').value;
+
+      if (!idValue || !fromDate || !toDate) {
+        alert('Enter ID and date range');
+        return;
+      }
+
+      try {
+        const res = await fetch('/send-mails/by-id', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ idValue, fromDate, toDate })
+        });
+
+        const data = await res.json();
+        alert(data.message);
+      } catch (err) {
+        alert('Error sending individual mail');
+      }
+    }
+
+    function showStatus(msg, type) {
+      const status = document.getElementById('status');
+      status.textContent = msg;
+      status.className = type;
+    }
+
+    // Check auth on page load
+    checkAuth();
+  </script>
+</body>
+</html>
