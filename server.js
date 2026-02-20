@@ -173,10 +173,10 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
             </thead>
             <tbody>${rows}</tbody>
           </table>
-
+          <p><strong>Instructions:</strong></p>
           <p><strong>Please report 20 minutes before the start time.</strong></p>
           
-          <p><em>This is a noreply email. For any queries please contact: <a href="murtaza.bohra@mahindrauniversity.edu.in">exams@mahindrauniversity.edu.in</a></em></p>
+          <p><em>This is a noreply email. For any queries please contact: <a href="murtaza.bohra@mahindrauniversity.edu.in">murtaza.bohra@mahindrauniversity.edu.in</a></em></p>
           
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
             <p><strong>Best Regards,</strong></p>
