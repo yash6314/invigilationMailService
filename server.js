@@ -159,7 +159,7 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
       const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <p>Dear <strong>${p.name}</strong> (${p.idLabel}: ${p.idValue}),</p>
-          <p>You are assigned the following invigilation duties for <strong>Spring Semester Minor-1 2025-26</strong>:</p>
+          <p>You are assigned the following invigilation duties for <strong>Spring Semester Mid-term 2025-26</strong>:</p>
 
           <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%; margin: 20px 0;">
             <thead style="background:#4CAF50; color: white;">
@@ -178,9 +178,9 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
           <p><strong>2. Request all faculty/Non-faculty colleagues to please observe the "NO CELL PHONE/LAPTOP" usage during the duty period.</strong></p>
           <p><strong>3. The question papers will be distributed exactly at 10:00 AM. Please ensure that all students are expected to be seated in their designated places by 9:50 AM – however, we estimate that few students will enter post this time – and hence NO students will be allowed to enter the exam room after 10:00 AM under any circumstances.</strong></p>
           <p><strong>4. The students are required to report to the examination centers at Mahindra University with their MU identity card (ID) at 9.30 AM onward. In the event of a lost ID card or if a student is not carrying their ID card, they will be liable for a penalty of Rs. 5000/-, which can only be paid through the QR code (using PhonePe, G Pay, Paytm, etc.) available at the check-in desk for obtaining a new or temporary ID card.</strong></p>
-          <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying any banned item during the examination, their exam paper will be immediately confiscated and awarded 'ZERO MARK'. There will be random physical frisking in each exam room.</strong></p>
-          <p><strong>6. Students will be permitted to leave the exam room only after completing the first one hour.</strong></p>
-          <p><strong>7. No wash room break for Minors and supplementary exams!</strong></p>
+          <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying a banned item during the examination, their answer script will be immediately confiscated, and awarded ‘F’ Grade in the subject and will have to repeat examination in the next semester. There will be random physical frisking in each exam room.</strong></p>
+          <p><strong>6. Students will be permitted to leave the exam room only after completing the first one hour. Students will be permitted to leave the examination room only in the last half hour.</strong></p>
+          <p><strong>7. No washroom breaks will be allowed during mid-term/supple exams of 1.5 or 2 hours. For 3-hour examinations, washroom breaks will be allowed only during the middle one hour.</strong></p>
           
           <p><em>This is a noreply email. For any queries please contact: <a href="mailto:murtaza.bohra@mahindrauniversity.edu.in">murtaza.bohra@mahindrauniversity.edu.in</a></em></p>
           <p>Thank you for your cooperation.</p>
@@ -197,7 +197,7 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
         await transporter.sendMail({
           from: `"Examination Cell" <${process.env.MAIL_USER}>`,
           to: p.mail,
-          subject: 'Invigilation Duties - Spring Semester Minor-1 2025-26',
+          subject: 'Invigilation Duties - Spring Semester Mid-term 2025-26',
           html,
           text: 'Please view this email in HTML format.'
         });
@@ -339,7 +339,7 @@ app.post('/send-mails/by-id', async (req, res) => {
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <p>Dear <strong>${user.name}</strong> (${idLabel}: ${idValue}),</p>
-        <p>Your invigilation duties for <strong>Spring Semester Minor-1 2025-26</strong> are as follows:</p>
+        <p>Your invigilation duties for <strong>Spring Semester Mid-term 2025-26</strong> are as follows:</p>
 
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%; margin: 20px 0;">
           <thead style="background:#4CAF50; color: white;">
@@ -358,9 +358,9 @@ app.post('/send-mails/by-id', async (req, res) => {
         <p><strong>2. Request all faculty/Non-faculty colleagues to please observe the "NO CELL PHONE/LAPTOP" usage during the duty period.</strong></p>
         <p><strong>3. The question papers will be distributed exactly at 10:00 AM. Please ensure that all students are expected to be seated in their designated places by 9:50 AM – however, we estimate that few students will enter post this time – and hence NO students will be allowed to enter the exam room after 10:00 AM under any circumstances.</strong></p>
         <p><strong>4. The students are required to report to the examination centers at Mahindra University with their MU identity card (ID) at 9.30 AM onward. In the event of a lost ID card or if a student is not carrying their ID card, they will be liable for a penalty of Rs. 5000/-, which can only be paid through the QR code (using PhonePe, G Pay, Paytm, etc.) available at the check-in desk for obtaining a new or temporary ID card.</strong></p>
-        <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying any banned item during the examination, their exam paper will be immediately confiscated and awarded 'ZERO MARK'. There will be random physical frisking in each exam room.</strong></p>
-        <p><strong>6. Students will be permitted to leave the exam room only after completing the first one hour.</strong></p>
-        <p><strong>7. No wash room break for Minors and supplementary exams!</strong></p>
+        <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying a banned item during the examination, their answer script will be immediately confiscated, and awarded ‘F’ Grade in the subject and will have to repeat examination in the next semester. There will be random physical frisking in each exam room.</strong></p>
+        <p><strong>6. Students will be permitted to leave the exam room only after completing the first one hour. Students will be permitted to leave the examination room only in the last half hour.</strong></p>
+        <p><strong>7. No washroom breaks will be allowed during mid-term/supple exams of 1.5 or 2 hours. For 3-hour examinations, washroom breaks will be allowed only during the middle one hour.</strong></p>
 
         <p><em>This is a noreply email. For any queries please contact: <a href="mailto:murtaza.bohra@mahindrauniversity.edu.in">murtaza.bohra@mahindrauniversity.edu.in</a></em></p>
         <p>Thank you for your cooperation.</p>
@@ -376,7 +376,7 @@ app.post('/send-mails/by-id', async (req, res) => {
     await transporter.sendMail({
       from: `"Examination Cell" <${process.env.MAIL_USER}>`,
       to: user.mail_id,
-      subject: 'Invigilation Duties - Spring Semester Minor-1 2025-26',
+      subject: 'Invigilation Duties - Spring Semester Mid-term 2025-26',
       html,
       text: 'Please view this email in HTML format.'
     });
