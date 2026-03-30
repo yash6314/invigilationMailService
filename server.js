@@ -18,8 +18,6 @@ const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
-
-// ✅ CORRECT
 const transporter = nodemailer.createTransport({
   host: process.env.MAIL_HOST,
   port: process.env.MAIL_PORT,
@@ -35,7 +33,7 @@ const transporter = nodemailer.createTransport({
    BULK MAIL LOGIC (DATE RANGE → ALL INVIGILATORS)
 ========================================================= */
 async function sendBulkInvigilationMails(fromDate, toDate) {
-  console.log(`📩 Bulk mail started | ${fromDate} → ${toDate}`);
+  console.log(` Bulk mail started | ${fromDate} → ${toDate}`);
 
   try {
     const { data: invigilations, error } = await supabase
@@ -56,12 +54,12 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
       .or('mail_sent.eq.false,force_resend.eq.true');
 
     if (error) {
-      console.error('❌ Invigilation fetch error:', error.message);
+      console.error(' Invigilation fetch error:', error.message);
       return;
     }
 
     if (!invigilations?.length) {
-      console.log('ℹ️ No invigilation records found');
+      console.log(' No invigilation records found');
       return;
     }
 
@@ -91,7 +89,7 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
             .single();
 
           if (!user?.mail_id) {
-            console.error(`❌ Mail missing for QID: ${qid}`);
+            console.error(`Mail missing for QID: ${qid}`);
             anyFailure = true;
             continue;
           }
@@ -130,9 +128,10 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
           };
         }
 
-        // ✅ IST TIME CONVERSION
+        // IST TIME CONVERSION
         personMap[qid].duties.push({
-          date: inv.date,          time: `${new Date(inv.start_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })} – ${new Date(inv.end_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })}`,
+          date: inv.date,
+          time: `${new Date(inv.start_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })} – ${new Date(inv.end_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })}`,
           venue: venue?.venue_name,
           hall: hall?.hall_name,
           floor: hall?.floor
@@ -159,7 +158,7 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
       const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <p>Dear <strong>${p.name}</strong> (${p.idLabel}: ${p.idValue}),</p>
-          <p>You are assigned the following invigilation duties for <strong>Spring Semester Mid-term 2025-26</strong>:</p>
+          <p>You are assigned the following invigilation duties for <strong>MBA End-Term examinations, April 2026</strong>:</p>
 
           <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%; margin: 20px 0;">
             <thead style="background:#4CAF50; color: white;">
@@ -197,13 +196,13 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
         await transporter.sendMail({
           from: `"Examination Cell" <${process.env.MAIL_USER}>`,
           to: p.mail,
-          subject: 'Invigilation Duties - Spring Semester Mid-term 2025-26',
+          subject: 'Invigilation Duties - MBA End-Term examinations, April 2026',
           html,
           text: 'Please view this email in HTML format.'
         });
-        console.log(`✅ Bulk mail sent to ${p.mail}`);
+        console.log(`Bulk mail sent to ${p.mail}`);
       } catch (err) {
-        console.error(`❌ Mail failed for ${p.mail}:`, err.message);
+        console.error(`Mail failed for ${p.mail}:`, err.message);
         anyFailure = true;
       }
     }
@@ -217,13 +216,13 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
           force_resend: false
         })
         .in('invigilation_id', Array.from(invigilationIds));
-      console.log('🎉 Bulk mails completed & flags updated');
+      console.log('Bulk mails completed & flags updated');
     } else {
-      console.warn('⚠️ Some mails failed. Flags NOT updated.');
+      console.warn('Some mails failed. Flags NOT updated.');
     }
 
   } catch (err) {
-    console.error('🔥 Bulk mail error:', err.message);
+    console.error('Bulk mail error:', err.message);
   }
 }
 
@@ -316,7 +315,7 @@ app.post('/send-mails/by-id', async (req, res) => {
         .eq('venue_id', inv.venue_id)
         .single();
 
-      // ✅ IST TIME CONVERSION
+      //IST TIME CONVERSION
       duties.push({
         date: inv.date,
         time: `${new Date(inv.start_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })} – ${new Date(inv.end_time).toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata' })}`,
@@ -339,7 +338,7 @@ app.post('/send-mails/by-id', async (req, res) => {
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <p>Dear <strong>${user.name}</strong> (${idLabel}: ${idValue}),</p>
-        <p>Your invigilation duties for <strong>Spring Semester Mid-term 2025-26</strong> are as follows:</p>
+        <p>Your invigilation duties for <strong>MBA End-Term examinations, April 2026</strong> are as follows:</p>
 
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%; margin: 20px 0;">
           <thead style="background:#4CAF50; color: white;">
@@ -376,16 +375,16 @@ app.post('/send-mails/by-id', async (req, res) => {
     await transporter.sendMail({
       from: `"Examination Cell" <${process.env.MAIL_USER}>`,
       to: user.mail_id,
-      subject: 'Invigilation Duties - Spring Semester Mid-term 2025-26',
+      subject: 'Invigilation Duties - MBA End-Term examinations, April 2026',
       html,
       text: 'Please view this email in HTML format.'
     });
 
-    console.log(`✅ Individual mail sent to ${user.mail_id}`);
+    console.log(`Individual mail sent to ${user.mail_id}`);
     res.json({ message: `Mail sent to ${user.name}` });
 
   } catch (err) {
-    console.error('❌ Individual mail error:', err.message);
+    console.error('Individual mail error:', err.message);
     res.status(500).json({ message: 'Failed to send individual mail' });
   }
 });
@@ -427,5 +426,5 @@ app.get('/dashboard', (req, res) => {
 
 /* ---------------- START ---------------- */
 app.listen(3000, () => {
-  console.log('🚀 Server running at http://localhost:3000');
+  console.log('Server running at http://localhost:3000');
 });
