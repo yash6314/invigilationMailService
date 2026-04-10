@@ -179,7 +179,7 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
           <p><strong>4. The students are required to report to the examination centers at Mahindra University with their MU identity card (ID) at 9.30 AM onward. In the event of a lost ID card or if a student is not carrying their ID card, they will be liable for a penalty of Rs. 5000/-, which can only be paid through the QR code (using PhonePe, G Pay, Paytm, etc.) available at the check-in desk for obtaining a new or temporary ID card.</strong></p>
           <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying a banned item during the examination, their answer script will be immediately confiscated, and awarded ‘F’ Grade in the subject and will have to repeat examination in the next semester. There will be random physical frisking in each exam room.</strong></p>
           <p><strong>6. Students will be permitted to leave the examination room only in the last half hour.</strong></p>
-          <p><strong>7. No washroom breaks will be allowed during mid-term/supple exams of 1.5 or 2 hours. For 3-hour examinations, washroom breaks will be allowed only during the middle one hour.</strong></p>
+          <p><strong>7. No washroom breaks will be allowed during Minors!</strong></p>
           
           <p><em>This is a noreply email. For any queries please contact: <a href="mailto:murtaza.bohra@mahindrauniversity.edu.in">murtaza.bohra@mahindrauniversity.edu.in</a></em></p>
           <p>Thank you for your cooperation.</p>
@@ -359,8 +359,7 @@ app.post('/send-mails/by-id', async (req, res) => {
         <p><strong>4. The students are required to report to the examination centers at Mahindra University with their MU identity card (ID) at 9.30 AM onward. In the event of a lost ID card or if a student is not carrying their ID card, they will be liable for a penalty of Rs. 5000/-, which can only be paid through the QR code (using PhonePe, G Pay, Paytm, etc.) available at the check-in desk for obtaining a new or temporary ID card.</strong></p>
         <p><strong>5. Cell phones, smartwatches, notes, papers, and bags are strictly prohibited in the examination hall. Students need to bring their own pens, pencils, scientific (non-programmable) calculator, ruler, and erasers; borrowing from other students will not be allowed. If any student is found carrying a banned item during the examination, their answer script will be immediately confiscated, and awarded ‘F’ Grade in the subject and will have to repeat examination in the next semester. There will be random physical frisking in each exam room.</strong></p>
         <p><strong>6. Students will be permitted to leave the examination room only in the last half hour.</strong></p>
-        <p><strong>7. No washroom breaks will be allowed during mid-term/supple exams of 1.5 or 2 hours. For 3-hour examinations, washroom breaks will be allowed only during the middle one hour.</strong></p>
-
+        <p><strong>7. No washroom breaks will be allowed during Minors!</strong></p>
         <p><em>This is a noreply email. For any queries please contact: <a href="mailto:murtaza.bohra@mahindrauniversity.edu.in">murtaza.bohra@mahindrauniversity.edu.in</a></em></p>
         <p>Thank you for your cooperation.</p>
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
