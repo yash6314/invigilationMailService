@@ -173,8 +173,8 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
             <tbody>${rows}</tbody>
           </table>
           <p><strong>Instructions:</strong></p>
-          <p><strong>1. Faculties are requested to bring their MU Id card.</strong></p>
-          <p><strong>2. Request all faculty/Non-faculty colleagues to please observe the "NO CELL PHONE/LAPTOP" usage during the duty period.</strong></p>
+          <p><strong>1. Request all faculty/Non-faculty colleagues to please observe the "NO CELL PHONE/LAPTOP" usage during the duty period.</strong></p>
+          <p><strong>2. Faculties are requested to bring their MU Id card.</strong></p>          
           <p><strong>3. All invigilators are expected to report to the allotted exam room at least 20 minutes before start of the exam for smooth operation of the QP collection/distribution.</strong></p>
           <p><strong>4. The question papers will be distributed exactly at 10:00 AM. Please ensure that all students are expected to be seated in their designated places by 9:50 AM – however, we estimate that few students will enter post this time – and hence NO students will be allowed to enter the exam room after 10:00 AM under any circumstances.</strong></p>
           <p><strong>5. The students are required to report to the examination centers at Mahindra University with their MU identity card (ID) at 9.30 AM onward. In the event of a lost ID card or if a student is not carrying their ID card, they will be liable for a penalty of Rs. 5000/-, which can only be paid through the QR code (using PhonePe, G Pay, Paytm, etc.) available at the check-in desk for obtaining a new or temporary ID card.</strong></p>
@@ -187,10 +187,12 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
             <li>In large rooms (capacity >120 students), two students may go—one boy and one girl, and not from the same batch.</li>
           </ul>
 
+          <p>Thank you for your cooperation.</p>
+
           <p><em>This is a noreply email. For any queries please contact: 
           <a href="mailto:murtaza.bohra@mahindrauniversity.edu.in">murtaza.bohra@mahindrauniversity.edu.in</a></em></p>
 
-          <p>Thank you for your cooperation.</p>
+          
 
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
             <p><strong>Warm Regards,</strong></p>
@@ -363,8 +365,8 @@ app.post('/send-mails/by-id', async (req, res) => {
           <tbody>${rows}</tbody>
         </table>
         <p><strong>Instructions:</strong></p>
-        <p><strong>1. Faculties are requested to bring their MU Id card.</strong></p>
-        <p><strong>2. Request all faculty/Non-faculty colleagues to please observe the "NO CELL PHONE/LAPTOP" usage during the duty period.</strong></p>
+        <p><strong>1. Request all faculty/Non-faculty colleagues to please observe the "NO CELL PHONE/LAPTOP" usage during the duty period.</strong></p>
+        <p><strong>2. Faculties are requested to bring their MU Id card.</strong></p>
         <p><strong>3. All invigilators are expected to report to the allotted exam room at least 20 minutes before start of the exam for smooth operation of the QP collection/distribution.</strong></p>
         <p><strong>4. The question papers will be distributed exactly at 10:00 AM. Please ensure that all students are expected to be seated in their designated places by 9:50 AM – however, we estimate that few students will enter post this time – and hence NO students will be allowed to enter the exam room after 10:00 AM under any circumstances.</strong></p>
         <p><strong>5. The students are required to report to the examination centers at Mahindra University with their MU identity card (ID) at 9.30 AM onward. In the event of a lost ID card or if a student is not carrying their ID card, they will be liable for a penalty of Rs. 5000/-, which can only be paid through the QR code (using PhonePe, G Pay, Paytm, etc.) available at the check-in desk for obtaining a new or temporary ID card.</strong></p>
@@ -377,11 +379,12 @@ app.post('/send-mails/by-id', async (req, res) => {
           <li>In large rooms (capacity >120 students), two students may go—one boy and one girl, and not from the same batch.</li>
         </ul>
 
+        <p>Thank you for your cooperation.</p>
+
         <p><em>This is a noreply email. For any queries please contact: 
         <a href="mailto:murtaza.bohra@mahindrauniversity.edu.in">murtaza.bohra@mahindrauniversity.edu.in</a></em></p>
 
-        <p>Thank you for your cooperation.</p>
-
+       
         <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee;">
           <p><strong>Warm Regards,</strong></p>
 
