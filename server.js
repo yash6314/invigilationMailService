@@ -183,10 +183,8 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
           <p><strong>8. Washroom breaks will be allowed only between 11:30 AM and 12:15 PM during End Term examinations.</strong></p>
 
           <ul style="margin-top: 5px; margin-bottom: 15px;">
-            <li>Students are permitted to leave the examination hall only during the specified time window.</li>
-            <li>Only one student will be allowed at a time from a row/section, subject to invigilator approval.</li>
-            <li>Students must carry their Hall Ticket while leaving the examination hall.</li>
-            <li>No extra time will be provided for washroom breaks.</li>
+            <li>Only one student (boy or girl) may go at a time from small exam rooms.</li>
+            <li>In large rooms (capacity >120 students), two students may go—one boy and one girl, and not from the same batch.</li>
           </ul>
 
           <p><em>This is a noreply email. For any queries please contact: 
@@ -375,10 +373,8 @@ app.post('/send-mails/by-id', async (req, res) => {
         <p><strong>8. Washroom breaks will be allowed only between 11:30 AM and 12:15 PM during End Term examinations.</strong></p>
 
         <ul style="margin-top: 5px; margin-bottom: 15px;">
-          <li>Students are permitted to leave the examination hall only during the specified time window.</li>
-          <li>Only one student will be allowed at a time from a row/section, subject to invigilator approval.</li>
-          <li>Students must carry their Hall Ticket while leaving the examination hall.</li>
-          <li>No extra time will be provided for washroom breaks.</li>
+          <li>Only one student (boy or girl) may go at a time from small exam rooms.</li>
+          <li>In large rooms (capacity >120 students), two students may go—one boy and one girl, and not from the same batch.</li>
         </ul>
 
         <p><em>This is a noreply email. For any queries please contact: 
