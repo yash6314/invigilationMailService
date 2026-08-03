@@ -158,7 +158,7 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
       const html = `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <p>Dear <strong>${p.name}</strong> (${p.idLabel}: ${p.idValue}),</p>
-          <p>You are assigned the following invigilation duties for <strong>Special Supplementary Examinations – June,2026</strong>:</p>
+          <p>You are assigned the following invigilation duties for <strong>Special Examination – Aug,2026</strong>:</p>
 
           <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%; margin: 20px 0;">
             <thead style="background:#4CAF50; color: white;">
@@ -208,7 +208,7 @@ async function sendBulkInvigilationMails(fromDate, toDate) {
         await transporter.sendMail({
           from: `"Examination Cell" <${process.env.MAIL_USER}>`,
           to: p.mail,
-          subject: 'Invigilation Duties - Special Supplementary Examinations – June,2026',
+          subject: 'Invigilation Duties - Special Examination – Aug,2026',
           html,
           text: 'Please view this email in HTML format.'
         });
@@ -350,7 +350,7 @@ app.post('/send-mails/by-id', async (req, res) => {
     const html = `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <p>Dear <strong>${user.name}</strong> (${idLabel}: ${idValue}),</p>
-        <p>Your invigilation duties for <strong>Special Supplementary Examinations – June,2026</strong> are as follows:</p>
+        <p>Your invigilation duties for <strong>Special Examination – Aug,2026</strong> are as follows:</p>
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse:collapse;width:100%; margin: 20px 0;">
           <thead style="background:#4CAF50; color: white;">
             <tr>
@@ -397,7 +397,7 @@ app.post('/send-mails/by-id', async (req, res) => {
     await transporter.sendMail({
       from: `"Examination Cell" <${process.env.MAIL_USER}>`,
       to: user.mail_id,
-      subject: 'Invigilation Duties - Special Supplementary Examinations – June,2026',
+      subject: 'Invigilation Duties - Special Examination – Aug,2026',
       html,
       text: 'Please view this email in HTML format.'
     });
